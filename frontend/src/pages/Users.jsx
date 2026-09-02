@@ -4,7 +4,6 @@ import AdminLayout from "../layouts/AdminLayout";
 import { getUsers } from "../api/adminApi";
 
 function Users() {
-
   const [users, setUsers] = useState([]);
 
   const [filters, setFilters] = useState({
@@ -12,6 +11,8 @@ function Users() {
     email: "",
     address: "",
     role: "",
+    sortBy: "name",
+    order: "ASC",
   });
 
   useEffect(() => {
@@ -20,11 +21,8 @@ function Users() {
 
   const fetchUsers = async () => {
     try {
-
       const res = await getUsers(filters);
-
       setUsers(res.data.users);
-
     } catch (error) {
       console.log(error);
     }
@@ -41,19 +39,50 @@ function Users() {
     fetchUsers();
   };
 
+  // Sorting
+  const handleSort = (field) => {
+    const newOrder =
+      filters.sortBy === field && filters.order === "ASC"
+        ? "DESC"
+        : "ASC";
+
+    const updatedFilters = {
+      ...filters,
+      sortBy: field,
+      order: newOrder,
+    };
+
+    setFilters(updatedFilters);
+
+    fetchUsersWithSort(updatedFilters);
+  };
+
+  const fetchUsersWithSort = async (updatedFilters) => {
+    try {
+      const res = await getUsers(updatedFilters);
+      setUsers(res.data.users);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getSortIcon = (field) => {
+    if (filters.sortBy !== field) {
+      return "↕";
+    }
+
+    return filters.order === "ASC" ? "↑" : "↓";
+  };
+
   return (
     <AdminLayout>
-
       <h1 className="text-3xl font-bold mb-8">
         Users
       </h1>
 
       {/* Filters */}
-
-      <div className="bg-white p-6 rounded-xl shadow-md mb-8  ">
-
+      <div className="bg-white p-6 rounded-xl shadow-md mb-8">
         <div className="grid grid-cols-4 gap-4">
-
           <input
             type="text"
             name="name"
@@ -92,87 +121,108 @@ function Users() {
             <option value="owner">Owner</option>
             <option value="user">User</option>
           </select>
-
         </div>
 
         <div className="flex justify-center mt-3">
           <button
-          onClick={handleSearch}
-          className="mt-5 bg-blue-600 text-white px-6 py-2 rounded-lg"
-        >
-          Search
-        </button>
+            onClick={handleSearch}
+            className="mt-5 bg-blue-600 text-white px-6 py-2 rounded-lg"
+          >
+            Search
+          </button>
         </div>
-
       </div>
 
-      
-
+      {/* Users Table */}
       <div className="bg-white rounded-xl shadow-md overflow-hidden">
-
         <table className="w-full">
-
           <thead className="bg-gray-100">
-
             <tr>
 
-              <th className="p-4 text-left">Name</th>
+              {/* Name */}
+              <th
+                className="p-4 text-left cursor-pointer select-none"
+                onClick={() => handleSort("name")}
+              >
+                Name {getSortIcon("name")}
+              </th>
 
-              <th className="p-4 text-left">Email</th>
+              {/* Email */}
+              <th
+                className="p-4 text-left cursor-pointer select-none"
+                onClick={() => handleSort("email")}
+              >
+                Email {getSortIcon("email")}
+              </th>
 
-              <th className="p-4 text-left">Address</th>
+              {/* Address */}
+              <th
+                className="p-4 text-left cursor-pointer select-none"
+                onClick={() => handleSort("address")}
+              >
+                Address {getSortIcon("address")}
+              </th>
 
-              <th className="p-4 text-left">Role</th>
+              {/* Role */}
+              <th
+                className="p-4 text-left cursor-pointer select-none"
+                onClick={() => handleSort("role")}
+              >
+                Role {getSortIcon("role")}
+              </th>
 
               <th className="p-4 text-center">
                 Action
               </th>
-
             </tr>
-
           </thead>
 
           <tbody>
-
-            {users.length===0 ?(
-
-                <tr>
-                <td colSpan="5" className="text-center py-6" >   No Users Found </td>
-                </tr>)
-                : (users.map((user) => (
-
+            {users.length === 0 ? (
+              <tr>
+                <td
+                  colSpan="5"
+                  className="text-center py-6"
+                >
+                  No Users Found
+                </td>
+              </tr>
+            ) : (
+              users.map((user) => (
                 <tr
                   key={user.id}
-                  className="border-t" >
-
-                  <td className="p-4"> {user.name} </td>
-
-                  <td className="p-4"> {user.email}  </td>
-
-                  <td className="p-4"> {user.address}</td>
-
-                  <td className="p-4 capitalize"> {user.role}</td>
-
-                  <td className="p-4 text-center">
-
-                    <Link to={`/admin/user/${user.id}`}
-                      className="bg-blue-600 text-white px-4 py-2 rounded-lg" >
-                      View
-                    </Link>
-
+                  className="border-t"
+                >
+                  <td className="p-4">
+                    {user.name}
                   </td>
 
-                </tr>
+                  <td className="p-4">
+                    {user.email}
+                  </td>
 
+                  <td className="p-4">
+                    {user.address}
+                  </td>
+
+                  <td className="p-4 capitalize">
+                    {user.role}
+                  </td>
+
+                  <td className="p-4 text-center">
+                    <Link
+                      to={`/admin/user/${user.id}`}
+                      className="bg-blue-600 text-white px-4 py-2 rounded-lg"
+                    >
+                      View
+                    </Link>
+                  </td>
+                </tr>
               ))
             )}
-
           </tbody>
-
         </table>
-
       </div>
-
     </AdminLayout>
   );
 }

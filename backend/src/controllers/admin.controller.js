@@ -102,7 +102,6 @@ export const addUser = async (req, res) => {
 
 export const addStore = async (req, res) => {
   try {
-
     const { name, email, address, ownerId } = req.body;
 
     // Required fields
@@ -112,10 +111,32 @@ export const addStore = async (req, res) => {
         message: "All fields are required",
       });
     }
-    console.log("ownerId:", ownerId);
 
-    const users = await User.findAll();
-    console.log(users);
+    // Store name validation
+    if (name.trim().length < 20 || name.trim().length > 60) {
+      return res.status(400).json({
+        success: false,
+        message: "Store name must be between 20 and 60 characters",
+      });
+    }
+
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(email.trim())) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid email",
+      });
+    }
+
+    // Address validation
+    if (address.trim().length > 400) {
+      return res.status(400).json({
+        success: false,
+        message: "Address cannot exceed 400 characters",
+      });
+    }
 
     // Check owner exists
     const owner = await User.findByPk(ownerId);
@@ -127,7 +148,7 @@ export const addStore = async (req, res) => {
       });
     }
 
-    // Owner role = owner
+    // Check selected user is actually an owner
     if (owner.role !== "owner") {
       return res.status(400).json({
         success: false,
@@ -135,9 +156,11 @@ export const addStore = async (req, res) => {
       });
     }
 
-    // Email already exists
+    // Check store email already exists
     const existingStore = await Store.findOne({
-      where: { email },
+      where: {
+        email: email.trim(),
+      },
     });
 
     if (existingStore) {
@@ -147,11 +170,11 @@ export const addStore = async (req, res) => {
       });
     }
 
-    // Create Store
+    // Create store
     const store = await Store.create({
-      name,
-      email,
-      address,
+      name: name.trim(),
+      email: email.trim(),
+      address: address.trim(),
       ownerId,
     });
 
@@ -162,13 +185,12 @@ export const addStore = async (req, res) => {
     });
 
   } catch (error) {
-    console.log(error)
+    console.error(error);
 
     return res.status(500).json({
       success: false,
       message: error.message,
     });
-
   }
 };
 
@@ -204,30 +226,32 @@ export const getDashboard = async (req, res) => {
 
 export const getAllUsers = async (req, res) => {
   try {
+    const {
+      name,
+      email,
+      address,
+      role,
+      sortBy = "name",
+      order = "ASC",
+    } = req.query;
 
-    const {name,email,address,role,sortBy = "name",order = "ASC",} = req.query;
     const where = {};
-
-    // Only admin and user should be shown
-    // where.role = {
-    // [Op.in]: ["admin", "user"]
-    // };
 
     if (name) {
       where.name = {
-        [Op.like]: `%${name}%`
+        [Op.like]: `%${name}%`,
       };
     }
 
     if (email) {
       where.email = {
-        [Op.like]: `%${email}%`
+        [Op.like]: `%${email}%`,
       };
     }
 
     if (address) {
       where.address = {
-        [Op.like]: `%${address}%`
+        [Op.like]: `%${address}%`,
       };
     }
 
@@ -235,10 +259,35 @@ export const getAllUsers = async (req, res) => {
       where.role = role;
     }
 
+    // Allowed sorting fields
+    const allowedSortFields = [
+      "name",
+      "email",
+      "address",
+      "role",
+    ];
+
+    const safeSortBy = allowedSortFields.includes(sortBy)
+      ? sortBy
+      : "name";
+
+    const safeOrder =
+      order.toUpperCase() === "DESC"
+        ? "DESC"
+        : "ASC";
+
     const users = await User.findAll({
-        where,
-        attributes: ["id", "name", "email", "address", "role"],
-        order: [[sortBy, order]],
+      where,
+
+      attributes: [
+        "id",
+        "name",
+        "email",
+        "address",
+        "role",
+      ],
+
+      order: [[safeSortBy, safeOrder]],
     });
 
     return res.status(200).json({
@@ -247,15 +296,14 @@ export const getAllUsers = async (req, res) => {
     });
 
   } catch (error) {
+    console.error(error);
 
     return res.status(500).json({
       success: false,
       message: error.message,
     });
-
   }
 };
-
 
 
 

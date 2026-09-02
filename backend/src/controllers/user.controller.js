@@ -136,23 +136,29 @@ export const getAllStores = async (req, res) => {
 
 export const submitRating = async (req, res) => {
   try {
-
     const { storeId, rating } = req.body;
 
-    if (!storeId || !rating) {
+    // Required fields
+    if (!storeId || rating === undefined || rating === null) {
       return res.status(400).json({
         success: false,
         message: "Store ID and Rating are required",
       });
     }
 
-    if (rating < 1 || rating > 5) {
+    // Rating validation
+    if (
+      !Number.isInteger(Number(rating)) ||
+      Number(rating) < 1 ||
+      Number(rating) > 5
+    ) {
       return res.status(400).json({
         success: false,
-        message: "Rating must be between 1 and 5",
+        message: "Rating must be an integer between 1 and 5",
       });
     }
 
+    // Check store
     const store = await Store.findByPk(storeId);
 
     if (!store) {
@@ -162,6 +168,7 @@ export const submitRating = async (req, res) => {
       });
     }
 
+    // Check existing rating
     const existingRating = await Rating.findOne({
       where: {
         userId: req.user.id,
@@ -176,10 +183,11 @@ export const submitRating = async (req, res) => {
       });
     }
 
+    // Create rating
     const newRating = await Rating.create({
       userId: req.user.id,
       storeId,
-      rating,
+      rating: Number(rating),
     });
 
     return res.status(201).json({
@@ -189,35 +197,40 @@ export const submitRating = async (req, res) => {
     });
 
   } catch (error) {
+    console.error(error);
 
     return res.status(500).json({
       success: false,
       message: error.message,
     });
-
   }
 };
 
 export const updateRating = async (req, res) => {
   try {
-
     const { storeId, rating } = req.body;
-    
 
-    if (!storeId || !rating) {
+    // Required fields
+    if (!storeId || rating === undefined || rating === null) {
       return res.status(400).json({
         success: false,
         message: "Store ID and Rating are required",
       });
     }
 
-    if (rating < 1 || rating > 5) {
+    // Rating validation
+    if (
+      !Number.isInteger(Number(rating)) ||
+      Number(rating) < 1 ||
+      Number(rating) > 5
+    ) {
       return res.status(400).json({
         success: false,
-        message: "Rating must be between 1 and 5",
+        message: "Rating must be an integer between 1 and 5",
       });
     }
 
+    // Find user's existing rating
     const existingRating = await Rating.findOne({
       where: {
         userId: req.user.id,
@@ -232,7 +245,7 @@ export const updateRating = async (req, res) => {
       });
     }
 
-    existingRating.rating = rating;
+    existingRating.rating = Number(rating);
 
     await existingRating.save();
 
@@ -243,11 +256,11 @@ export const updateRating = async (req, res) => {
     });
 
   } catch (error) {
+    console.error(error);
 
     return res.status(500).json({
       success: false,
       message: error.message,
     });
-
   }
 };

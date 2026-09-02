@@ -1,6 +1,5 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../db/db.js";
-import User from "./user.models.js";
 
 const Store = sequelize.define(
   "Store",
@@ -14,6 +13,12 @@ const Store = sequelize.define(
     name: {
       type: DataTypes.STRING(100),
       allowNull: false,
+      validate: {
+        len: {
+          args: [20, 60],
+          msg: "Store name must be between 20 and 60 characters",
+        },
+      },
     },
 
     email: {
@@ -21,14 +26,23 @@ const Store = sequelize.define(
       allowNull: false,
       unique: true,
       validate: {
-        isEmail: true,
+        isEmail: {
+          msg: "Invalid email address",
+        },
       },
     },
 
     address: {
       type: DataTypes.STRING(400),
       allowNull: false,
+      validate: {
+        len: {
+          args: [1, 400],
+          msg: "Address must be between 1 and 400 characters",
+        },
+      },
     },
+
     ownerId: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -39,7 +53,5 @@ const Store = sequelize.define(
     tableName: "stores",
   }
 );
-
-
 
 export default Store;
