@@ -17,7 +17,7 @@ export const ownerDashboard = async (req, res) => {
       });
     }
 
-    // Get ratings with user details
+
     const ratings = await Rating.findAll({
       where: {
         storeId: store.id,
@@ -31,7 +31,7 @@ export const ownerDashboard = async (req, res) => {
       ],
     });
 
-    // Calculate average rating
+
     let averageRating = 0;
 
     if (ratings.length > 0) {
@@ -43,16 +43,14 @@ export const ownerDashboard = async (req, res) => {
       averageRating = total / ratings.length;
     }
 
-    // Convert data into required format
+
     let users = ratings.map((rating) => ({
       name: rating.user.name,
       email: rating.user.email,
       rating: rating.rating,
     }));
 
-    // -------------------------
-    // Sorting
-    // -------------------------
+  
 
     const allowedSortFields = [
       "name",

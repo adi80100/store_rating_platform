@@ -37,7 +37,7 @@ function Stores() {
     fetchStores();
   };
 
-  // Sorting
+
   const handleSort = (field) => {
     const newOrder =
       filters.sortBy === field && filters.order === "ASC"
@@ -78,7 +78,7 @@ function Stores() {
         Stores
       </h1>
 
-      {/* Filters */}
+
       <div className="bg-white rounded-xl shadow-md p-6 mb-8">
         <div className="grid grid-cols-3 gap-4">
 
@@ -121,14 +121,14 @@ function Stores() {
         </div>
       </div>
 
-      {/* Table */}
+
       <div className="bg-white rounded-xl shadow-md overflow-hidden">
         <table className="w-full">
 
           <thead className="bg-gray-100">
             <tr>
 
-              {/* Name */}
+
               <th
                 className="p-4 text-left cursor-pointer select-none"
                 onClick={() => handleSort("name")}
@@ -136,7 +136,7 @@ function Stores() {
                 Name {getSortIcon("name")}
               </th>
 
-              {/* Email */}
+
               <th
                 className="p-4 text-left cursor-pointer select-none"
                 onClick={() => handleSort("email")}
@@ -144,7 +144,7 @@ function Stores() {
                 Email {getSortIcon("email")}
               </th>
 
-              {/* Address */}
+
               <th
                 className="p-4 text-left cursor-pointer select-none"
                 onClick={() => handleSort("address")}
@@ -152,7 +152,7 @@ function Stores() {
                 Address {getSortIcon("address")}
               </th>
 
-              {/* Rating */}
+
               <th
                 className="p-4 text-center cursor-pointer select-none"
                 onClick={() => handleSort("rating")}

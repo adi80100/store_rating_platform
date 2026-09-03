@@ -8,7 +8,7 @@ export const addUser = async (req, res) => {
   try {
     const { name, email, password, address, role } = req.body;
 
-    // required fields
+
     if (!name || !email || !password || !address || !role) {
       return res.status(400).json({
         success: false,
@@ -16,7 +16,7 @@ export const addUser = async (req, res) => {
       });
     }
 
-    // name validation
+
     if (name.length < 20 || name.length > 60) {
       return res.status(400).json({
         success: false,
@@ -24,7 +24,7 @@ export const addUser = async (req, res) => {
       });
     }
 
-    // email validation
+
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (!emailRegex.test(email)) {
@@ -34,7 +34,7 @@ export const addUser = async (req, res) => {
       });
     }
 
-    // Password validation
+
     const passwordRegex =
       /^(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>]).{8,16}$/;
 
@@ -46,7 +46,7 @@ export const addUser = async (req, res) => {
       });
     }
 
-    // address validation
+
     if (address.length > 400) {
       return res.status(400).json({
         success: false,
@@ -54,7 +54,7 @@ export const addUser = async (req, res) => {
       });
     }
 
-    // role validation
+
     if (!["admin", "user", "owner"].includes(role)) {
       return res.status(400).json({
         success: false,
@@ -62,7 +62,7 @@ export const addUser = async (req, res) => {
       });
     }
 
-    // check existing user
+
     const existingUser = await User.findOne({
       where: { email },
     });
@@ -74,10 +74,10 @@ export const addUser = async (req, res) => {
       });
     }
 
-    // hash password
+
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // create user
+
     const user = await User.create({
       name,
       email,
@@ -104,7 +104,7 @@ export const addStore = async (req, res) => {
   try {
     const { name, email, address, ownerId } = req.body;
 
-    // Required fields
+
     if (!name || !email || !address || !ownerId) {
       return res.status(400).json({
         success: false,
@@ -112,7 +112,7 @@ export const addStore = async (req, res) => {
       });
     }
 
-    // Store name validation
+
     if (name.trim().length < 20 || name.trim().length > 60) {
       return res.status(400).json({
         success: false,
@@ -120,7 +120,7 @@ export const addStore = async (req, res) => {
       });
     }
 
-    // Email validation
+
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (!emailRegex.test(email.trim())) {
@@ -130,7 +130,7 @@ export const addStore = async (req, res) => {
       });
     }
 
-    // Address validation
+
     if (address.trim().length > 400) {
       return res.status(400).json({
         success: false,
@@ -138,7 +138,7 @@ export const addStore = async (req, res) => {
       });
     }
 
-    // Check owner exists
+
     const owner = await User.findByPk(ownerId);
 
     if (!owner) {
@@ -148,7 +148,7 @@ export const addStore = async (req, res) => {
       });
     }
 
-    // Check selected user is actually an owner
+
     if (owner.role !== "owner") {
       return res.status(400).json({
         success: false,
@@ -156,7 +156,7 @@ export const addStore = async (req, res) => {
       });
     }
 
-    // Check store email already exists
+
     const existingStore = await Store.findOne({
       where: {
         email: email.trim(),
@@ -170,7 +170,7 @@ export const addStore = async (req, res) => {
       });
     }
 
-    // Create store
+
     const store = await Store.create({
       name: name.trim(),
       email: email.trim(),
@@ -259,7 +259,7 @@ export const getAllUsers = async (req, res) => {
       where.role = role;
     }
 
-    // Allowed sorting fields
+
     const allowedSortFields = [
       "name",
       "email",
@@ -338,7 +338,7 @@ export const getAllStores = async (req, res) => {
       };
     }
 
-    // Allowed sorting fields
+
     const allowedSortFields = [
       "name",
       "email",
@@ -485,11 +485,7 @@ export const getUserDetails = async (req, res) => {
 
         }
 
-        // return res.status(200).json({
-        //     success:true,
-        //     user,
-        //     rating:ownerRating
-        // });
+       
         return res.status(200).json({
           success: true,
           user: {

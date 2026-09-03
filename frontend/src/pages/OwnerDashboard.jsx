@@ -26,7 +26,7 @@ function OwnerDashboard() {
     }
   };
 
-  // Sorting
+
   const handleSort = (field) => {
     const newOrder =
       sort.sortBy === field && sort.order === "ASC"
@@ -56,7 +56,7 @@ function OwnerDashboard() {
         Store Owner Dashboard
       </h1>
 
-      {/* Dashboard Cards */}
+
       <div className="grid md:grid-cols-2 gap-6 mb-8">
 
         <div className="bg-white rounded-xl shadow-md p-6">
@@ -81,7 +81,7 @@ function OwnerDashboard() {
 
       </div>
 
-      {/* Users Who Rated */}
+
       <div className="bg-white rounded-xl shadow-md overflow-hidden">
 
         <table className="w-full">
@@ -90,7 +90,7 @@ function OwnerDashboard() {
 
             <tr>
 
-              {/* User Name */}
+
               <th
                 className="p-4 text-left cursor-pointer select-none"
                 onClick={() => handleSort("name")}
@@ -98,7 +98,7 @@ function OwnerDashboard() {
                 User Name {getSortIcon("name")}
               </th>
 
-              {/* Email */}
+
               <th
                 className="p-4 text-left cursor-pointer select-none"
                 onClick={() => handleSort("email")}
@@ -106,7 +106,7 @@ function OwnerDashboard() {
                 Email {getSortIcon("email")}
               </th>
 
-              {/* Rating */}
+
               <th
                 className="p-4 text-center cursor-pointer select-none"
                 onClick={() => handleSort("rating")}

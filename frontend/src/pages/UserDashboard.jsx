@@ -38,7 +38,7 @@ function UserDashboard() {
     });
   };
 
-  // Sorting
+
   const handleSort = (field) => {
     const newOrder =
       filters.sortBy === field && filters.order === "ASC"
@@ -105,7 +105,7 @@ function UserDashboard() {
         Store Ratings
       </h1>
 
-      {/* Filters */}
+
       <div className="bg-white p-6 rounded-xl shadow-md mb-8">
         <div className="grid md:grid-cols-2 gap-4">
           <input
@@ -137,13 +137,13 @@ function UserDashboard() {
         </div>
       </div>
 
-      {/* Stores Table */}
+
       <div className="bg-white rounded-xl shadow-md overflow-hidden">
         <table className="w-full">
           <thead className="bg-gray-100">
             <tr>
 
-              {/* Store Name */}
+
               <th
                 className="p-4 text-left cursor-pointer select-none"
                 onClick={() => handleSort("name")}
@@ -151,7 +151,7 @@ function UserDashboard() {
                 Store Name {getSortIcon("name")}
               </th>
 
-              {/* Address */}
+
               <th
                 className="p-4 text-left cursor-pointer select-none"
                 onClick={() => handleSort("address")}
@@ -159,7 +159,7 @@ function UserDashboard() {
                 Address {getSortIcon("address")}
               </th>
 
-              {/* Overall Rating */}
+
               <th
                 className="p-4 text-center cursor-pointer select-none"
                 onClick={() => handleSort("overallRating")}
@@ -228,7 +228,7 @@ function UserDashboard() {
         </table>
       </div>
 
-      {/* Rating Modal */}
+
       {showModal && (
         <div className="fixed inset-0 bg-black/40 flex justify-center items-center">
           <div className="bg-white rounded-xl shadow-lg p-8 w-96">

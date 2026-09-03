@@ -39,7 +39,7 @@ function Users() {
     fetchUsers();
   };
 
-  // Sorting
+
   const handleSort = (field) => {
     const newOrder =
       filters.sortBy === field && filters.order === "ASC"
@@ -80,7 +80,7 @@ function Users() {
         Users
       </h1>
 
-      {/* Filters */}
+
       <div className="bg-white p-6 rounded-xl shadow-md mb-8">
         <div className="grid grid-cols-4 gap-4">
           <input
@@ -133,13 +133,13 @@ function Users() {
         </div>
       </div>
 
-      {/* Users Table */}
+
       <div className="bg-white rounded-xl shadow-md overflow-hidden">
         <table className="w-full">
           <thead className="bg-gray-100">
             <tr>
 
-              {/* Name */}
+
               <th
                 className="p-4 text-left cursor-pointer select-none"
                 onClick={() => handleSort("name")}
@@ -147,7 +147,7 @@ function Users() {
                 Name {getSortIcon("name")}
               </th>
 
-              {/* Email */}
+
               <th
                 className="p-4 text-left cursor-pointer select-none"
                 onClick={() => handleSort("email")}
@@ -155,7 +155,7 @@ function Users() {
                 Email {getSortIcon("email")}
               </th>
 
-              {/* Address */}
+
               <th
                 className="p-4 text-left cursor-pointer select-none"
                 onClick={() => handleSort("address")}
@@ -163,7 +163,7 @@ function Users() {
                 Address {getSortIcon("address")}
               </th>
 
-              {/* Role */}
+
               <th
                 className="p-4 text-left cursor-pointer select-none"
                 onClick={() => handleSort("role")}

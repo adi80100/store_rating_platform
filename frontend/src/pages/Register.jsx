@@ -62,7 +62,7 @@ const handleSubmit = async (e) => {
     return;
   }
 
-  // Password validation
+
   const passwordRegex =
     /^(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>]).{8,16}$/;
 

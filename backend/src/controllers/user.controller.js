@@ -25,7 +25,7 @@ export const getAllStores = async (req, res) => {
       };
     }
 
-    // Allowed sorting fields
+
     const allowedSortFields = [
       "name",
       "address",
@@ -138,7 +138,7 @@ export const submitRating = async (req, res) => {
   try {
     const { storeId, rating } = req.body;
 
-    // Required fields
+
     if (!storeId || rating === undefined || rating === null) {
       return res.status(400).json({
         success: false,
@@ -146,7 +146,7 @@ export const submitRating = async (req, res) => {
       });
     }
 
-    // Rating validation
+
     if (
       !Number.isInteger(Number(rating)) ||
       Number(rating) < 1 ||
@@ -158,7 +158,7 @@ export const submitRating = async (req, res) => {
       });
     }
 
-    // Check store
+
     const store = await Store.findByPk(storeId);
 
     if (!store) {
@@ -168,7 +168,7 @@ export const submitRating = async (req, res) => {
       });
     }
 
-    // Check existing rating
+
     const existingRating = await Rating.findOne({
       where: {
         userId: req.user.id,
@@ -183,7 +183,7 @@ export const submitRating = async (req, res) => {
       });
     }
 
-    // Create rating
+
     const newRating = await Rating.create({
       userId: req.user.id,
       storeId,
@@ -210,7 +210,7 @@ export const updateRating = async (req, res) => {
   try {
     const { storeId, rating } = req.body;
 
-    // Required fields
+
     if (!storeId || rating === undefined || rating === null) {
       return res.status(400).json({
         success: false,
@@ -218,7 +218,7 @@ export const updateRating = async (req, res) => {
       });
     }
 
-    // Rating validation
+
     if (
       !Number.isInteger(Number(rating)) ||
       Number(rating) < 1 ||
@@ -230,7 +230,7 @@ export const updateRating = async (req, res) => {
       });
     }
 
-    // Find user's existing rating
+
     const existingRating = await Rating.findOne({
       where: {
         userId: req.user.id,
