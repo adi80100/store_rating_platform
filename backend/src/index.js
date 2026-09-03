@@ -13,7 +13,6 @@ connectDB()
   .then(async () => {
 
     await sequelize.sync();
-    console.log(" Database Synced Successfully");
 
     app.listen(process.env.PORT || 8000, () => {
       console.log(` App is running on port ${process.env.PORT || 8000}`);

@@ -5,8 +5,8 @@ import { sequelize } from "./src/db/db.js";
 const createAdmin = async () => {
   try {
     await sequelize.authenticate();
-
     console.log("Database connected");
+
 
     const existingAdmin = await User.findOne({
       where: {
@@ -15,7 +15,8 @@ const createAdmin = async () => {
     });
 
     if (existingAdmin) {
-      console.log("Admin already exists");
+            console.log("Admin already exists");
+
       return;
     }
 
@@ -29,7 +30,6 @@ const createAdmin = async () => {
       role: "admin",
     });
 
-    console.log("Admin created successfully");
 
   } catch (error) {
     console.error("Error creating admin:", error);
