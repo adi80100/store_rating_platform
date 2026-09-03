@@ -1,273 +1,144 @@
-#  Store Rating Platform
+# Store Rating Platform
 
-A full-stack web application that allows users to rate stores while providing role-based access for Administrators, Store Owners, and Normal Users. The application is built using **React.js, Node.js, Express.js, MySQL, Sequelize ORM, JWT Authentication, and Tailwind CSS**.
+A full-stack web application that allows users to rate registered stores while providing role-based access for **System Administrators, Normal Users, and Store Owners**.
+
+The application is built using **React.js, Node.js, Express.js, MySQL, Sequelize ORM, JWT Authentication, bcrypt, and Tailwind CSS**.
 
 ---
 
-#  Features
+## Features
 
-##  System Administrator
+### System Administrator
 
-- Secure Login
-- Dashboard displaying:
+- Secure login
+- Dashboard with:
   - Total Users
   - Total Stores
   - Total Submitted Ratings
-- Add Admin, User, and Store Owner
+- Add Admin Users
+- Add Normal Users
+- Add Store Owners
 - Add Stores
 - View all Users
 - View User Details
 - View all Stores
 - Search and Filter Users
 - Search and Filter Stores
+- Sort Users by Name, Email, Address, and Role
+- Sort Stores by Name, Email, Address, and Average Rating
+- View Store Average Ratings
 - Change Password
 - Logout
 
 ---
 
-##  Normal User
+### Normal User
 
 - Register
 - Login
 - Change Password
 - View all Stores
 - Search Stores by Name and Address
-- Submit Ratings (1–5)
-- Update Submitted Ratings
 - View Overall Store Rating
 - View Own Submitted Rating
+- Submit Rating from 1–5
+- Update Submitted Rating
+- Sort Stores by Name, Address, and Overall Rating
 - Logout
 
 ---
 
-##  Store Owner
+### Store Owner
 
-- Login
+- Secure Login
 - Change Password
+- View their Store
+- View Store Average Rating
 - View Users who rated their Store
-- View Average Rating of their Store
+- View individual User Ratings
+- Sort Rating Users by Name, Email, and Rating
 - Logout
 
 ---
 
-#  Tech Stack
+## Technology Stack
 
 ### Frontend
+
 - React.js
 - React Router DOM
 - Axios
 - Tailwind CSS
+- React Toastify
+- React Icons
+- Vite
 
 ### Backend
+
 - Node.js
 - Express.js
 - Sequelize ORM
 - MySQL
-- JWT Authentication
+- JSON Web Token (JWT)
 - bcrypt
+- CORS
 
 ---
 
-#  Project Structure
+## Project Structure
 
-```
-Store-Rating-Platform
+```text
+Store_Rating_platform/
 │
-├── backend
-│   ├── controllers
-│   ├── middleware
-│   ├── models
-│   ├── routes
-│   ├── db
-│   ├── server.js
-│   └── package.json
+├── backend/
+│   ├── src/
+│   │   ├── controllers/
+│   │   │   ├── admin.controller.js
+│   │   │   ├── auth.controller.js
+│   │   │   ├── owner.controller.js
+│   │   │   └── user.controller.js
+│   │   │
+│   │   ├── middleware/
+│   │   │   ├── auth.middleware.js
+│   │   │   └── role.middleware.js
+│   │   │
+│   │   ├── models/
+│   │   │   ├── associations.models.js
+│   │   │   ├── rating.models.js
+│   │   │   ├── store.models.js
+│   │   │   └── user.models.js
+│   │   │
+│   │   ├── routes/
+│   │   │   ├── admin.routes.js
+│   │   │   ├── auth.routes.js
+│   │   │   ├── owner.routes.js
+│   │   │   ├── store.routes.js
+│   │   │   └── user.routes.js
+│   │   │
+│   │   ├── db/
+│   │   │   └── db.js
+│   │   │
+│   │   ├── app.js
+│   │   └── index.js
+│   │
+│   ├── createAdmin.js
+│   ├── package.json
+│   └── package-lock.json
 │
-├── frontend
-│   ├── src
-│   ├── components
-│   ├── pages
-│   ├── layouts
-│   ├── api
-│   ├── public
-│   └── package.json
+├── frontend/
+│   ├── src/
+│   │   ├── api/
+│   │   ├── components/
+│   │   ├── layouts/
+│   │   ├── pages/
+│   │   ├── routes/
+│   │   ├── App.jsx
+│   │   └── main.jsx
+│   │
+│   ├── public/
+│   ├── package.json
+│   ├── package-lock.json
+│   └── vite.config.js
 │
+├── .gitignore
 └── README.md
-```
-
----
-
-#  Functionalities
-
-## Admin
-
-- Add Users
-- Add Stores
-- Dashboard Statistics
-- View Users
-- View User Details
-- View Stores
-- Search & Filter Users
-- Search & Filter Stores
-
----
-
-## User
-
-- Register
-- Login
-- View Stores
-- Submit Ratings
-- Update Ratings
-- Search Stores
-- Change Password
-
----
-
-## Store Owner
-
-- Login
-- View Users who Rated Store
-- View Store Average Rating
-- Change Password
-
----
-
-#  Form Validations
-
-- Name: 20–60 characters
-- Address: Maximum 400 characters
-- Email: Standard Email Validation
-- Password:
-  - 8–16 characters
-  - At least one uppercase letter
-  - At least one special character
-- Rating:
-  - Minimum: 1
-  - Maximum: 5
-
----
-
-#  Search & Filter
-
-### Users
-
-- Name
-- Email
-- Address
-- Role
-
-### Stores
-
-- Name
-- Email
-- Address
-
----
-
-#  Authentication
-
-- JWT Authentication
-- Password Hashing using bcrypt
-- Role-Based Authorization
-- Protected Routes
-
----
-
-#  Installation
-
-## Clone Repository
-
-```bash
-git clone https://github.com/your-username/store-rating-platform.git
-```
-
----
-
-## Backend Setup
-
-```bash
-cd backend
-npm install
-```
-
-Create a `.env` file inside the backend folder.
-
-```env
-PORT=8000
-
-DB_HOST=localhost
-DB_USER=root
-DB_PASSWORD=your_password
-DB_NAME=store_rating
-
-JWT_SECRET=your_secret_key
-```
-
-Start the backend server:
-
-```bash
-npm run dev
-```
-
----
-
-## Frontend Setup
-
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-Frontend:
-
-```
-http://localhost:5173
-```
-
-Backend:
-
-```
-http://localhost:8000
-```
-
----
-
-#  Screenshots
-
-Add screenshots of:
-
-- Login Page
-- Register Page
-- Admin Dashboard
-- User Dashboard
-- Store Owner Dashboard
-- Users List
-- Stores List
-- User Details
-
----
-
-#  Author
-
-**Aditya Dayanand Dhore**
-
-Bachelor of Engineering (Information Technology)
-
-Sinhgad College of Engineering, Pune
-
-GitHub: https://github.com/adi80100
-
----
-
-#  Project Highlights
-
-- Full Stack MERN-style Architecture (React + Node + Express + MySQL)
-- Role-Based Access Control
-- JWT Authentication
-- Secure Password Hashing
-- Store Rating System
-- Search, Filter & Sorting
-- Responsive UI using Tailwind CSS
-- RESTful API Design
-- MySQL Database with Sequelize ORM
