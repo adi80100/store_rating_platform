@@ -20,7 +20,7 @@ function AdminDashboard() {
         const res = await getDashboard();
         setDashboard(res.data.dashboard);
     } catch (error) {
-        console.log(error);
+  console.error(error);
     }
     };
 

@@ -24,7 +24,7 @@ function AddStore() {
         setOwners(res.data.users);
 
         } catch (error) {
-        console.log(error);
+  console.error(error);
         }
     };
     useEffect(() => {

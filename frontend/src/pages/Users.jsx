@@ -24,7 +24,7 @@ function Users() {
       const res = await getUsers(filters);
       setUsers(res.data.users);
     } catch (error) {
-      console.log(error);
+  console.error(error);
     }
   };
 
@@ -62,7 +62,7 @@ function Users() {
       const res = await getUsers(updatedFilters);
       setUsers(res.data.users);
     } catch (error) {
-      console.log(error);
+  console.error(error);
     }
   };
 

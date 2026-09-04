@@ -17,7 +17,7 @@ function UserDetails() {
       const res = await getUserDetails(id);
       setUser(res.data.user);
     } catch (error) {
-      console.log(error);
+  console.error(error);
     }
   };
 

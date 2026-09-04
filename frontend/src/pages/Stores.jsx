@@ -22,7 +22,7 @@ function Stores() {
       const res = await getStores(filters);
       setStores(res.data.stores);
     } catch (error) {
-      console.log(error);
+  console.error(error);
     }
   };
 
@@ -60,7 +60,7 @@ function Stores() {
       const res = await getStores(updatedFilters);
       setStores(res.data.stores);
     } catch (error) {
-      console.log(error);
+  console.error(error);
     }
   };
 

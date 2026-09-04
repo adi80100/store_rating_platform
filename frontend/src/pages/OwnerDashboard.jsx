@@ -22,7 +22,7 @@ function OwnerDashboard() {
       setStore(res.data.store);
       setUsers(res.data.users);
     } catch (error) {
-      console.log(error);
+  console.error(error);
     }
   };
 
