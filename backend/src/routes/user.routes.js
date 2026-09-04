@@ -9,10 +9,10 @@ const router = express.Router();
 router.use(verifyJWT);
 
 
-router.get("/stores",verifyJWT,authorizeRoles("user"), getAllStores);
+router.get("/stores",authorizeRoles("user"), getAllStores);
 
-router.post("/rating", verifyJWT,authorizeRoles("user"),submitRating);
+router.post("/rating",authorizeRoles("user"),submitRating);
 
-router.put("/rating", verifyJWT,authorizeRoles("user"), updateRating);
+router.put("/rating",authorizeRoles("user"), updateRating);
 
 export default router;
